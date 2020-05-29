@@ -1,6 +1,6 @@
 from discord.ext import commands
 import requests
-
+import discord
 
 class Weather(commands.Cog):
 
@@ -15,23 +15,24 @@ class Weather(commands.Cog):
         r = requests.get(url, headers=headers)
         r = r.json()
         temp_now_data = r['fact']
-        temp_now = temp_now_data['temp']
-        feels_like = temp_now_data['feels_like']
-        wind_speed
-        wind_dir
-        condition
-        humidity
-        prec_type
-        prec_strength
-
-
-
-
-
-
         member = '<@{mem}>'.format(mem=ctx.message.author.id)
-        await ctx.send('{member}'.format(member=member))
+        text = '{member} погода на сегодня:*' \
+               '{condition}*' \
+               'температура {temp}*' \
+               'ощущается как {feels_like}*' \
+               'ветер {wind_speed}*' \
+               ''.format(member=member,
+                         condition=temp_now_data['condition'],
+                         temp=temp_now_data['temp'],
+                         feels_like=temp_now_data['feels_like'],
+                         wind_speed=temp_now_data['wind_speed'])
+        # await ctx.send('\n'.join(text.split('*')))
+        embed = discord.Embed(title=member, description='\n'.join(text.split('*')))
 
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        msg = await ctx.send(content='Now generating the embed...')
+
+        await msg.edit(embed=embed)
 
 def setup(bot):
     bot.add_cog(Weather(bot))

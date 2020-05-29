@@ -10,5 +10,4 @@ async def on_ready():
     print('Bot started')
     bot.load_extension('weather')
 
-bot.loop.create_task()
 bot.run(TOKEN)
