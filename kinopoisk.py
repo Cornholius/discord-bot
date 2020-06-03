@@ -1,7 +1,7 @@
 import requests
 import discord
 from discord.ext import commands
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup
 
 
 class KinoPoisk(commands.Cog):
@@ -14,7 +14,7 @@ class KinoPoisk(commands.Cog):
     async def introvert(self, ctx):
         all_films = []
         r = requests.get('https://www.kinopoisk.ru/premiere/').content
-        soup = bs(r, 'lxml')
+        soup = BeautifulSoup(r, 'lxml')
         container = soup.select('div.premier_item')
         for block in container:
             filmlogo_string = block.select('meta')[1]

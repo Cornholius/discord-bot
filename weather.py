@@ -46,7 +46,6 @@ class Weather(commands.Cog):
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         msg = await ctx.send(content='Now generating the embed...')
         await msg.edit(embed=embed, content=None)
-# print("\n".join(map(str, qwe)))
 
 
 def setup(bot):
